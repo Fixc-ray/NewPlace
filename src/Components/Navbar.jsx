@@ -8,7 +8,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       // Set scrolled to true if user has scrolled more than 0 pixels
-      setScrolled(window.scrollY > 0);
+      setScrolled(window.scrollY > 10);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full p-4 transition-colors duration-300 z-10 ${
+      className={`fixed top-0 left-0 w-full p-4 transition-colors duration-300 z-100 ${
         scrolled ? "bg-white" : "bg-transparent"
       }`}
     >

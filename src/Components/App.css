@@ -1,11 +1,10 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 .home {
-    width: 98vw;
+    width: 99.45vw;
     margin-left: calc((100% - 100vw) / 2); 
   }
 
