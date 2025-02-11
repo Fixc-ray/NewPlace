@@ -32,7 +32,7 @@ function Home() {
         className="absolute inset-0 bg-cover bg-center transition-all duration-1000"
         style={{ backgroundImage: `url(${images[currentImage]})` }}
       >
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center sm:items-start sm:pt-16 h-full px-4 sm:px-8 md:px-12 lg:px-16 text-center">
