@@ -12,9 +12,9 @@ const Gallery = () => {
     Navigate("/socials")
   }
   return (
-    <section className="container home p-4">
-      <h2 className="text-black font-bold text-2xl mb-8">View Our Gallery</h2>
-      <div className="flex flex-col md:flex-row gap-4">
+    <section className="container p-4">
+      <h2 className="text-black font-bold lg:text-4xl mb-8 text-gray-800">View Our Gallery</h2>
+      <div className=" home p-4 flex flex-col md:flex-row gap-4">
         <div className="md:w-1/2">
           <img
             src={Front}
