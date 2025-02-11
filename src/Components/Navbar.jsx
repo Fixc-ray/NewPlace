@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import "./App.css";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,85 +8,99 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Set scrolled to true if user has scrolled more than 0 pixels
-      setScrolled(window.scrollY > 10);
+      setScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Open the external Airbnb link in a new tab
+  const Book = () => {
+    window.open(
+      "https://www.airbnb.com/rooms/1349261162979951446?guests=1&adults=1&s=67&unique_share_id=b3ff539c-44b9-4625-81e3-31adc2bb498f&source_impression_id=p3_1739257035_P3lljSXZmlVnBv_-",
+      "_blank"
+    );
+  };
+
   return (
     <nav
-      className={`fixed top-0 left-0 w-full p-4 transition-colors duration-300 z-100 ${
-        scrolled ? "bg-white" : "bg-transparent"
+      className={`fixed top-0 left-0 w-full p-4 transition-colors duration-300 z-50 bg-white ${
+        scrolled ? "sm:bg-white" : "sm:bg-transparent"
       }`}
     >
       <div className="container mx-auto grid grid-cols-3 items-center">
-        {/* Left Column: Logo */}
+        {/* Left Column: Hamburger Toggle */}
         <div className="text-left">
-          <a href="#" className={`text-lg sm:text-2xl font-bold ${
-        scrolled ? "text-black" : "text-white"
-      }`}>
+          <button
+            className={`ham bg-transparent p-2 text-black ${
+              scrolled ? "sm:text-black" : "sm:text-white"
+            }`}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
+
+        {/* Center Column: Logo */}
+        <div className="text-center">
+          <a
+            href="#"
+            className={`text-lg sm:text-2xl font-bold text-black ${
+              scrolled ? "sm:text-black" : "sm:text-white"
+            }`}
+          >
             New Haven Place
           </a>
         </div>
 
-        {/* Center Column: Navigation Links (shown on medium screens and up) */}
-        <div className="hidden md:flex justify-center space-x-6">
-          <a href="#" className={`${scrolled ? "text-black" : "text-white"}`}>
-            Home
-          </a>
-          <a
-            href="about"
-            className={`${scrolled ? "text-black" : "text-white"}`}
-          >
-            About
-          </a>
-          <a href="#" className={`${scrolled ? "text-black" : "text-white"}`}>
-            Services
-          </a>
-          <a href="#" className={`${scrolled ? "text-black" : "text-white"}`}>
-            Contact
-          </a>
-        </div>
-
-        {/* Right Column: Mobile Menu Toggle (for small screens) and CTA Button for larger screens */}
+        {/* Right Column: CTA Button */}
         <div className="text-right">
-          {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden bg-[#756745] p-2 rounded"
-            onClick={() => setIsOpen(!isOpen)}
+            className="ham bg-[#825f35] text-white text-xs p-1 sm:text-sm sm:p-2"
+            onClick={Book}
           >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-          {/* CTA Button (shown on medium screens and up) */}
-          <button className="hidden md:inline-block bg-[#825f35] text-white p-2">
             Book Now
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu (shown when isOpen is true) */}
+      {/* Dropdown Menu: Displayed when isOpen is true */}
       {isOpen && (
-        <ul className="absolute top-full left-0 w-full bg-black/50 backdrop-blur-lg text-center space-y-4 p-4 md:hidden">
+        <ul className="absolute top-full left-0 w-full bg-white text-black text-center space-y-4 p-4">
           <li>
-            <a href="#" className="block text-white hover:text-yellow-300">
+            <a
+              href="#"
+              className="block text-black hover:text-yellow-300"
+              onClick={() => setIsOpen(false)}
+            >
               Home
             </a>
           </li>
           <li>
-            <a href="#" className="block text-white hover:text-yellow-300">
+            <a
+              href="#"
+              className="block text-black hover:text-yellow-300"
+              onClick={() => setIsOpen(false)}
+            >
               About
             </a>
           </li>
           <li>
-            <a href="#" className="block text-white hover:text-yellow-300">
+            <a
+              href="#"
+              className="block text-black hover:text-yellow-300"
+              onClick={() => setIsOpen(false)}
+            >
               Services
             </a>
           </li>
           <li>
-            <a href="#" className="block text-white hover:text-yellow-300">
+            <a
+              href="#"
+              className="block text-black hover:text-yellow-300"
+              onClick={() => setIsOpen(false)}
+            >
               Contact
             </a>
           </li>

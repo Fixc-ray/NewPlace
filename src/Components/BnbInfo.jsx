@@ -9,7 +9,7 @@ const BnbInfo = () => {
       animate={{ opacity: 1, y: 0 }} // Fade in & move up
       transition={{ duration: 1.5, ease: "easeOut" }} // Smooth transition
     >
-      <div className="flex flex-col md:flex-row items-start">
+      <div className="flex flex-col mx-auto md:flex-row items-start">
         <div className="md:w-1/2 mb-6 md:mb-0">
           <h2 className="text-xl sm:text-4xl lg:text-4xl font-bold text-gray-800">
             Discover Your Perfect

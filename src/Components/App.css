@@ -4,9 +4,16 @@
   text-align: center;
 }
 .home {
-    width: 99.45vw;
-    margin-left: calc((100% - 100vw) / 2); 
-  }
+  width: 99.45vw;
+  margin-left: calc((100% - 100vw) / 2);
+}
+.ham {
+  border: none;
+}
+.arrow:hover {
+  cursor: pointer;
+
+}
 
 .logo {
   height: 6em;
@@ -45,18 +52,17 @@
 }
 @import "tailwindcss";
 .white-box {
-    position: relative;
-    overflow: visible; /* Allow the pseudo-element to be visible outside the box */
-  }
-  
-  .white-box::after {
-    content: "";
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    width: 40px;
-    height: 40px;
-    background-color: white;
-    border-radius: 50%;
-  }
-  
+  position: relative;
+  overflow: visible; /* Allow the pseudo-element to be visible outside the box */
+}
+
+.white-box::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 50%;
+}

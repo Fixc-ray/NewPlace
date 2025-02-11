@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import g7 from "../assets/g7.jpg";
 import g6 from "../assets/g6.jpg";
 import "../index.css";
@@ -11,17 +12,20 @@ const HoverBackground = () => {
     "Welcome to Paradise, where luxury meets tranquility. Nestled in the heart of the city, our exquisite hotel offers a perfect blend of modern comfort and timeless elegance. Whether you're here for business or leisure, our hotel provides the perfect setting for a memorable stay."
   );
 
+  // Initialize useNavigate from react-router-dom
+  const navigate = useNavigate();
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      if (scrollPosition <= 1800) {
+      if (scrollPosition <= 1700) {
         setScale(0.5);
       } else if (scrollPosition >= 900) {
         setScale(1);
       } else if (scrollPosition >= 2000) {
         setScale(0.5);
-      }  else {
-        const newScale = 1 + (scrollPosition - 1000) / 200 * 0.5;
+      } else {
+        const newScale = 1 + ((scrollPosition - 1000) / 200) * 0.5;
         setScale(newScale);
       }
     };
@@ -31,10 +35,11 @@ const HoverBackground = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  
+
+  // When Discover More is clicked, navigate to the /navbar route
   const DiscoverMore = () => {
-    alert("Discover More");
-  }
+    navigate("/Details");
+  };
 
   return (
     <div
@@ -57,8 +62,8 @@ const HoverBackground = () => {
       {/* Discover More Button */}
       <button
         className="relative z-10 px-8 py-3 mt-4 text-lg font-semibold bg-[#756745] text-black 
-        hover:bg-[#756745] hover:scale-105 transition duration-300 
-        shadow-lg hover:shadow-[#756745]"
+          hover:bg-[#756745] hover:scale-105 transition duration-300 
+          shadow-lg hover:shadow-[#756745]"
         onClick={DiscoverMore}
       >
         Discover More
@@ -67,7 +72,7 @@ const HoverBackground = () => {
       {/* Buttons at Bottom */}
       <div className="relative z-10 absolute bottom-10 flex gap-10">
         <a
-          className="text-lg font-semibold px-6 py-3 rounded transition duration-300 text-white"
+          className="text-lg font-semibold px-6 py-3 rounded transition duration-300 text-white cursor-pointer"
           onMouseEnter={() => {
             setBackground(g6);
             setText("Discover the Hidden Gems");
@@ -80,7 +85,7 @@ const HoverBackground = () => {
         </a>
 
         <a
-          className="text-lg font-semibold px-6 py-3 rounded transition duration-300  text-white "
+          className="text-lg font-semibold px-6 py-3 rounded transition duration-300 text-white cursor-pointer"
           onMouseEnter={() => {
             setBackground(g7);
             setText("Experience the Luxury");
