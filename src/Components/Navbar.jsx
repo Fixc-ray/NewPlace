@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Home, Menu, X } from "lucide-react";
 import "./App.css";
 
 export default function Navbar() {
@@ -33,7 +33,7 @@ export default function Navbar() {
         {/* Left Column: Hamburger Toggle */}
         <div className="text-left">
           <button
-            className={`ham bg-transparent p-2 text-black ${
+            className={`ham bg-transparent p-2 ${
               scrolled ? "sm:text-black" : "sm:text-white"
             }`}
             onClick={() => setIsOpen(!isOpen)}
@@ -45,8 +45,8 @@ export default function Navbar() {
         {/* Center Column: Logo */}
         <div className="text-center">
           <a
-            href="#"
-            className={`text-lg sm:text-2xl font-bold text-black ${
+            href="/"
+            className={`text-lg sm:text-2xl font-bold ${
               scrolled ? "sm:text-black" : "sm:text-white"
             }`}
           >
@@ -70,7 +70,7 @@ export default function Navbar() {
         <ul className="absolute top-full left-0 w-full bg-white text-black text-center space-y-4 p-4">
           <li>
             <a
-              href="#"
+              href="#home"
               className="block text-black hover:text-yellow-300"
               onClick={() => setIsOpen(false)}
             >
@@ -79,25 +79,25 @@ export default function Navbar() {
           </li>
           <li>
             <a
-              href="#"
+              href="/socials"
               className="block text-black hover:text-yellow-300"
               onClick={() => setIsOpen(false)}
             >
-              About
+              Gallery
             </a>
           </li>
           <li>
             <a
-              href="#"
+              href="#about"
               className="block text-black hover:text-yellow-300"
               onClick={() => setIsOpen(false)}
             >
-              Services
+              What We Offer
             </a>
           </li>
           <li>
             <a
-              href="#"
+              href="#footer"
               className="block text-black hover:text-yellow-300"
               onClick={() => setIsOpen(false)}
             >

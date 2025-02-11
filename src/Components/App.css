@@ -10,6 +10,10 @@
 .ham {
   border: none;
 }
+html {
+  scroll-behavior: smooth;
+}
+
 .arrow:hover {
   cursor: pointer;
 

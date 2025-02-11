@@ -9,7 +9,7 @@ const HoverBackground = () => {
   const [text, setText] = useState("Welcome to Paradise");
   const [scale, setScale] = useState(0.5);
   const [paragraph, setParagraph] = useState(
-    "Welcome to Paradise, where luxury meets tranquility. Nestled in the heart of the city, our exquisite hotel offers a perfect blend of modern comfort and timeless elegance. Whether you're here for business or leisure, our hotel provides the perfect setting for a memorable stay."
+    "Welcome to Paradise, where luxury meets tranquility. Nestled in the heart of the city, our exquisite Bnb offers a perfect blend of modern comfort and timeless elegance. Whether you're here for business or leisure, our Bnb provides the perfect setting for a memorable stay."
   );
 
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const HoverBackground = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      if (scrollPosition <= 1700) {
+      if (scrollPosition <= 1800) {
         setScale(0.5);
       } else if (scrollPosition >= 900) {
         setScale(1);
@@ -77,7 +77,7 @@ const HoverBackground = () => {
             setBackground(g6);
             setText("Discover the Hidden Gems");
             setParagraph(
-              "Welcome to Paradise, where luxury meets tranquility. Nestled in the heart of the city, our exquisite hotel offers a perfect blend of modern comfort and timeless elegance. Whether you're here for business or leisure, our hotel provides the perfect setting for a memorable stay."
+              "Welcome to Paradise, where luxury meets tranquility. Nestled in the heart of the city, our exquisite Bnb offers a perfect blend of modern comfort and timeless elegance. Whether you're here for business or leisure, our Bnb provides the perfect setting for a memorable stay."
             );
           }}
         >
@@ -94,7 +94,7 @@ const HoverBackground = () => {
             );
           }}
         >
-          Book Now
+          Luxury
         </a>
       </div>
     </div>

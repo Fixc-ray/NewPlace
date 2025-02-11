@@ -16,12 +16,8 @@ function App() {
   return (
     <Router>
       <div>
-        {/* Navbar is always visible */}
         <Navbar />
-
-        {/* Define your routes */}
         <Routes>
-          {/* Main/Home page */}
           <Route
             path="/"
             element={
@@ -35,8 +31,6 @@ function App() {
               </>
             }
           />
-
-          {/* Route for the HoverBackground page */}
           <Route path="/Details" element={<RoomDetails />} />
           <Route path="/socials" element={<Socials />}/>
         </Routes>

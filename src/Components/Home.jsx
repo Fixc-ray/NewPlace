@@ -22,12 +22,15 @@ function Home() {
   }, [images.length]);
 
   const Book = () => {
-    Navigate("https://www.airbnb.com/rooms/1349261162979951446?guests=1&adults=1&s=67&unique_share_id=b3ff539c-44b9-4625-81e3-31adc2bb498f&source_impression_id=p3_1739257035_P3lljSXZmlVnBv_-");
+    window.open(
+      "https://www.airbnb.com/rooms/1349261162979951446?guests=1&adults=1&s=67&unique_share_id=b3ff539c-44b9-4625-81e3-31adc2bb498f&source_impression_id=p3_1739257035_P3lljSXZmlVnBv_-",
+      "_blank"
+    );
   };
 
 
   return (
-    <div className="home w-full h-screen top-0 relative rounded">
+    <div id="home" className="home w-full h-screen top-0 relative rounded">
       <div
         className="absolute inset-0 bg-cover bg-center transition-all duration-1000"
         style={{ backgroundImage: `url(${images[currentImage]})` }}
@@ -60,7 +63,7 @@ function Home() {
           transition={{ duration: 1.4, ease: "easeOut" }}
           className="text-sm sm:text-base md:text-lg text-white mb-4 sm:mb-6 max-w-xl"
         >
-          A serene BnB offering breathtaking views, perfect for those seeking
+          A serene Bnb offering breathtaking views, perfect for those seeking
           tranquility. Nestled in a picturesque location for a peaceful
           ambiance. Ideal for relaxation or creative retreats.
         </motion.h2>
@@ -73,13 +76,13 @@ function Home() {
         >
           <button
             className="bg-white text-black border border-white font-bold rounded transition duration-300 text-xs sm:text-sm px-4 py-2 hover:bg-black hover:text-white"
-            onClick={() => alert("Find Stay Clicked!")}
+            onClick={Book}
           >
             Find Stay
           </button>
           <button
             className="bg-transparent text-white border border-white font-bold rounded transition duration-300 text-xs sm:text-sm px-4 py-2 hover:bg-white hover:text-black"
-            onClick={() => alert("Contact Us Clicked!")}
+            onClick={() => alert("To Call Us kindly dial 0115995295")}
           >
             Contact Us
           </button>
