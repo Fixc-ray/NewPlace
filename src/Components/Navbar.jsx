@@ -1,5 +1,7 @@
+// Navbar.js
 import { useState, useEffect } from "react";
 import { Home, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "./App.css";
 
 export default function Navbar() {
@@ -14,14 +16,6 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Open the external Airbnb link in a new tab
-  const Book = () => {
-    window.open(
-      "https://www.airbnb.com/rooms/1349261162979951446?guests=1&adults=1&s=67&unique_share_id=b3ff539c-44b9-4625-81e3-31adc2bb498f&source_impression_id=p3_1739257035_P3lljSXZmlVnBv_-",
-      "_blank"
-    );
-  };
 
   return (
     <nav
@@ -56,16 +50,16 @@ export default function Navbar() {
 
         {/* Right Column: CTA Button */}
         <div className="text-right">
-          <button
-            className="ham bg-[#825f35] text-white text-xs p-1 sm:text-sm sm:p-2"
-            onClick={Book}
-          >
-            Book Now
-          </button>
+          {/* Link to the Booking page */}
+          <Link to="/booking">
+            <button className="ham bg-[#825f35] text-white text-xs p-1 sm:text-sm sm:p-2">
+              Book Now
+            </button>
+          </Link>
         </div>
       </div>
 
-      {/* Dropdown Menu: Displayed when isOpen is true */}
+      {/* Dropdown Menu */}
       {isOpen && (
         <ul className="absolute top-full left-0 w-full bg-white text-black text-center space-y-4 p-4">
           <li>

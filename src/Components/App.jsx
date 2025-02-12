@@ -5,12 +5,12 @@ import Home from "./Home";
 import BnbInfo from "./BnbInfo";
 import Gallery from "./Gallery";
 import About from "./About";
-import RoomDetails from "./RoomDetailed"
+import RoomDetails from "./RoomDetailed";
 import Footer from "./Footer";
 import "./App.css";
 import HoverBackground from "./HoverBackground";
 import Socials from "./Socials";
-
+import BookingForm from "./BookingForm";
 
 function App() {
   return (
@@ -31,8 +31,9 @@ function App() {
               </>
             }
           />
+          <Route path="/booking" element={<BookingForm />} />
           <Route path="/Details" element={<RoomDetails />} />
-          <Route path="/socials" element={<Socials />}/>
+          <Route path="/socials" element={<Socials />} />
         </Routes>
       </div>
     </Router>

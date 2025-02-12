@@ -17,7 +17,6 @@ function RoomComponent() {
 
   return (
     <div>
-      {/* Hero Section: Fullscreen background image with "Rooms" text and a down arrow */}
       <div className="home w-full h-screen relative rounded">
         <div
           className="absolute inset-0 bg-cover bg-center transition-all duration-1000"
@@ -32,7 +31,7 @@ function RoomComponent() {
           <FaChevronDown size={30} className="text-white animate-bounce" />
         </div>
       </div>
-      
+
       <div className="p-4 text-black">
         <h2 className="text-2xl font-bold mb-6 text-center">BnB Room Details</h2>
         <div className="grid grid-cols-1 gap-6">
