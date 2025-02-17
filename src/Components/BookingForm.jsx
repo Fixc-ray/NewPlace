@@ -1,4 +1,4 @@
-// BookingForm.js
+// BookingForm.jsx
 import React, { useState } from "react";
 
 export default function BookingForm() {
@@ -16,8 +16,7 @@ export default function BookingForm() {
     const start = new Date(checkIn);
     const end = new Date(checkOut);
     const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
 
   // Compute total amount based on nights and room price.
@@ -27,64 +26,78 @@ export default function BookingForm() {
     return nights * roomPrice;
   };
 
-  // Handle form submission: instead of immediately booking, show the modal.
+  // Handle the main form submission. Open the modal to enter phone number.
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!checkIn || !checkOut) {
       setMessage("Please select valid check-in and check-out dates.");
       return;
     }
-
-    // Open the modal popup for phone number input and amount confirmation.
+    setMessage(""); // clear previous messages
     setShowModal(true);
   };
 
-  // When the user confirms in the modal, send the booking request.
   const handleModalConfirm = async () => {
     if (!phoneNumber) {
       setMessage("Please enter your phone number.");
       return;
     }
+    setMessage("");
 
-    // Prepare the payload matching the Flask backend's expected format.
-    const payload = {
+    const bookingPayload = {
       room_type: roomType,
       number_of_members: numberOfMembers,
       check_in: checkIn,
       check_out: checkOut,
-      // Optionally include phone_number if your backend supports it:
-      // phone_number: phoneNumber,
     };
 
     try {
-      const response = await fetch("http://localhost:5000/book", {
+      const bookingResponse = await fetch("http://127.0.0.1:5000/book", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingPayload),
       });
-      const data = await response.json();
-      if (response.ok) {
-        setMessage(
-          `Booking successful! Your booking id is ${data.booking_id}. Please confirm payment via Mpesa to finalize your booking. Total amount: ${computeTotalAmount()}`
-        );
+      const bookingData = await bookingResponse.json();
+      if (!bookingResponse.ok) {
+        setMessage(`Booking Error: ${bookingData.error}`);
+        setShowModal(false);
+        return;
+      }
+      const bookingId = bookingData.booking_id;
+
+      // 2. Prepare payment payload.
+      const paymentPayload = {
+        phone_number: phoneNumber,
+        amount: computeTotalAmount(),
+        booking_id: bookingId,
+      };
+
+      // 3. Initiate Mpesa payment.
+      const paymentResponse = await fetch("http://127.0.0.1:5000/api/payments/mpesa", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(paymentPayload),
+      });
+      const paymentData = await paymentResponse.json();
+      if (!paymentResponse.ok) {
+        setMessage(`Payment Error: ${paymentData.error}`);
       } else {
-        setMessage(`Error: ${data.error}`);
+        setMessage(
+          `Booking successful! Your booking id is ${bookingId}. Payment initiated with transaction id: ${paymentData.transaction_id}.`
+        );
       }
     } catch (error) {
-      setMessage("An error occurred while booking. Please try again.");
+      setMessage("An error occurred: " + error.message);
     } finally {
-      setShowModal(false); // Close the modal whether booking succeeds or fails.
+      setShowModal(false);
     }
   };
 
   return (
-    <div className="booking-form-containerfont-bold">
+    <div className="booking-form-container text-black">
       <h2>Book a Room</h2>
       {message && <p className="message">{message}</p>}
-      <form onSubmit={handleSubmit} className="booking-form text-black">
+      <form onSubmit={handleSubmit} className="booking-form">
         <div className="form-group">
           <label htmlFor="roomType">Room Type:</label>
           <select
@@ -126,13 +139,13 @@ export default function BookingForm() {
           />
         </div>
         <button type="submit" className="btn">
-          Proceed to confirmation
+          Proceed to Confirmation
         </button>
       </form>
 
-      {/* Modal Popup for Phone Number & Amount Confirmation */}
+      {/* Modal Popup for Phone Number and Payment Confirmation */}
       {showModal && (
-        <div className="modal-overlay text-black font-bold">
+        <div className="modal-overlay">
           <div className="modal-content">
             <h3>Enter Your Phone Number</h3>
             <input
@@ -142,7 +155,8 @@ export default function BookingForm() {
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
             <p>
-              Total amount for your stay (for {computeNights()} night(s)):{" "}
+              Total amount for your stay (
+              {computeNights()} night{computeNights() !== 1 && "s"}):{" "}
               <strong>{computeTotalAmount()}</strong>
             </p>
             <div className="modal-buttons">
@@ -157,7 +171,7 @@ export default function BookingForm() {
         </div>
       )}
 
-      {/* Inline styles */}
+      {/* Inline Styles */}
       <style jsx>{`
         .booking-form-container {
           max-width: 500px;
@@ -166,9 +180,9 @@ export default function BookingForm() {
           background: #f9f9f9;
           border-radius: 8px;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-          font-family: "Arial", sans-serif;
+          font-family: Arial, sans-serif;
         }
-        .booking-form-container h2 {
+        h2 {
           text-align: center;
           margin-bottom: 1.5rem;
           color: #333;
@@ -187,13 +201,13 @@ export default function BookingForm() {
           display: flex;
           flex-direction: column;
         }
-        .form-group label {
+        label {
           margin-bottom: 0.5rem;
           font-weight: bold;
           color: #555;
         }
-        .form-group input,
-        .form-group select {
+        input,
+        select {
           padding: 0.5rem;
           border: 1px solid #ccc;
           border-radius: 4px;
@@ -212,7 +226,7 @@ export default function BookingForm() {
         .btn:hover {
           background: #6b4d2f;
         }
-        /* Modal styles */
+        /* Modal Styles */
         .modal-overlay {
           position: fixed;
           top: 0;
@@ -234,32 +248,13 @@ export default function BookingForm() {
           text-align: center;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
-        .modal-content h3 {
-          margin-bottom: 1rem;
-          color: #333;
-        }
-        .modal-content input {
-          width: 100%;
-          padding: 0.75rem;
-          margin-bottom: 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 1rem;
-        }
-        .modal-content p {
-          margin-bottom: 1rem;
-          font-size: 1rem;
-          color: #333;
-        }
         .modal-buttons {
           display: flex;
           justify-content: space-around;
+          margin-top: 1rem;
         }
         .btn.confirm {
           background: #6b4d2f;
-        }
-        .btn.confirm:hover {
-          background: #825f35;
         }
         .btn.cancel {
           background: #825f35;
