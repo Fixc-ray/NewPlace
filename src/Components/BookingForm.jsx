@@ -238,7 +238,7 @@ export default function BookingForm() {
               />
               <input
                 type="tel"
-                placeholder="Your mobile number"
+                placeholder="Your mobile number (Format: 254XXXXXXXXX)"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded mb-4"
