@@ -6,12 +6,12 @@ import g3 from "../assets/g3.jpg";
 import g4 from "../assets/g4.jpg";
 import "./App.css";
 import { FaCar, FaUmbrellaBeach, FaShieldAlt, FaWifi, FaChevronDown } from "react-icons/fa";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const images = [g5, g7, g3, g4];
   const [currentImage, setCurrentImage] = useState(0);
-  const Navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,6 +28,12 @@ function Home() {
     );
   };
 
+  const handleContactClick = () => {
+    const businessWhatsAppNumber = "254115995295";
+    const message = "Hello, I would like to inquire about your services."; // Customize this message if needed
+    const whatsappUrl = `https://wa.me/${businessWhatsAppNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
 
   return (
     <div id="home" className="home w-full h-screen top-0 relative rounded">
@@ -82,7 +88,7 @@ function Home() {
           </button>
           <button
             className="bg-transparent text-white border border-white font-bold rounded transition duration-300 text-xs sm:text-sm px-4 py-2 hover:bg-white hover:text-black"
-            onClick={() => alert("To Call Us kindly dial 0115995295")}
+            onClick={handleContactClick}
           >
             Contact Us
           </button>

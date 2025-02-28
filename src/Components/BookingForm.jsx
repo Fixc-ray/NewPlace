@@ -1,5 +1,14 @@
-// BookingForm.jsx
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import {
+  FaCar,
+  FaUmbrellaBeach,
+  FaShieldAlt,
+  FaWifi,
+  FaChevronDown,
+} from "react-icons/fa";
+import g6 from "../assets/g6.jpg";
+import "./App.css";
 
 export default function BookingForm() {
   const [roomType, setRoomType] = useState("1bedroom");
@@ -9,8 +18,11 @@ export default function BookingForm() {
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [customerName, setCustomerName] = useState("");
 
-  // Helper to compute number of nights between check-in and check-out.
+  // Create a ref for the booking form container
+  const bookingFormRef = useRef(null);
+
   const computeNights = () => {
     if (!checkIn || !checkOut) return 0;
     const start = new Date(checkIn);
@@ -19,25 +31,27 @@ export default function BookingForm() {
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
 
-  // Compute total amount based on nights and room price.
   const computeTotalAmount = () => {
     const nights = computeNights();
     const roomPrice = roomType === "1bedroom" ? 3500 : 5000;
     return nights * roomPrice;
   };
 
-  // Handle the main form submission. Open the modal to enter phone number.
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!checkIn || !checkOut) {
       setMessage("Please select valid check-in and check-out dates.");
       return;
     }
-    setMessage(""); // clear previous messages
+    setMessage("");
     setShowModal(true);
   };
 
   const handleModalConfirm = async () => {
+    if (!customerName) {
+      setMessage("Please enter your full name.");
+      return;
+    }
     if (!phoneNumber) {
       setMessage("Please enter your phone number.");
       return;
@@ -49,6 +63,7 @@ export default function BookingForm() {
       number_of_members: numberOfMembers,
       check_in: checkIn,
       check_out: checkOut,
+      customer_name: customerName, 
     };
 
     try {
@@ -65,25 +80,27 @@ export default function BookingForm() {
       }
       const bookingId = bookingData.booking_id;
 
-      // 2. Prepare payment payload.
       const paymentPayload = {
         phone_number: phoneNumber,
         amount: computeTotalAmount(),
         booking_id: bookingId,
+        confirm: true,
       };
 
-      // 3. Initiate Mpesa payment.
-      const paymentResponse = await fetch("http://127.0.0.1:5000/api/payments/mpesa", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(paymentPayload),
-      });
+      const paymentResponse = await fetch(
+        "https://havenplacebackend.onrender.com/api/payments/mpesa/myphone",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(paymentPayload),
+        }
+      );
       const paymentData = await paymentResponse.json();
       if (!paymentResponse.ok) {
         setMessage(`Payment Error: ${paymentData.error}`);
       } else {
         setMessage(
-          `Booking successful! Your booking id is ${bookingId}. Payment initiated with transaction id: ${paymentData.transaction_id}.`
+          `Booking successful! Your booking id is ${bookingId}. Payment initiated with CheckoutRequestID: ${paymentData.CheckoutRequestID}.`
         );
       }
     } catch (error) {
@@ -94,175 +111,161 @@ export default function BookingForm() {
   };
 
   return (
-    <div className="booking-form-container text-black">
-      <h2>Book a Room</h2>
-      {message && <p className="message">{message}</p>}
-      <form onSubmit={handleSubmit} className="booking-form">
-        <div className="form-group">
-          <label htmlFor="roomType">Room Type:</label>
-          <select
-            id="roomType"
-            value={roomType}
-            onChange={(e) => setRoomType(e.target.value)}
-          >
-            <option value="1bedroom">1 Bedroom (3500)</option>
-            <option value="2bedroom">2 Bedroom (5000)</option>
-          </select>
+    <div>
+      {/* Home Section with Background Image and Overlay */}
+      <div id="home" className="home w-full h-screen relative rounded">
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-all duration-1000"
+          style={{ backgroundImage: `url(${g6})` }}
+        >
+          <div className="absolute inset-0 bg-black/20"></div>
         </div>
-        <div className="form-group">
-          <label htmlFor="numberOfMembers">Number of Members:</label>
-          <input
-            type="number"
-            id="numberOfMembers"
-            min="1"
-            max={roomType === "1bedroom" ? 2 : 4}
-            value={numberOfMembers}
-            onChange={(e) => setNumberOfMembers(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="checkIn">Check-In Date:</label>
-          <input
-            type="date"
-            id="checkIn"
-            value={checkIn}
-            onChange={(e) => setCheckIn(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="checkOut">Check-Out Date:</label>
-          <input
-            type="date"
-            id="checkOut"
-            value={checkOut}
-            onChange={(e) => setCheckOut(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="btn">
-          Proceed to Confirmation
-        </button>
-      </form>
 
-      {/* Modal Popup for Phone Number and Payment Confirmation */}
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>Enter Your Phone Number</h3>
+        <div className="relative z-10 flex flex-col items-center justify-center sm:pt-16 h-full px-4 sm:px-8 md:px-12 lg:px-16 text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="text-3xl sm:text-xs md:text-2xl lg:text-5xl font-bold text-white mb-1 sm:mb-3"
+          >
+            Like What You See??
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="text-3xl sm:text-md md:text-md lg:text-5xl font-bold text-white mb-2 sm:mb-4"
+          >
+            Book A Stay Now And Escape To Tranquility
+          </motion.p>
+        </div>
+        {/* Arrow that scrolls to the booking form */}
+        <div
+          className="arrow absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
+          onClick={() => {
+            if (bookingFormRef.current) {
+              bookingFormRef.current.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        >
+          <FaChevronDown size={30} className="text-white animate-bounce" />
+        </div>
+      </div>
+
+      {/* Booking Form Container */}
+      <div
+        id="booking-form"
+        ref={bookingFormRef}
+        className="booking-form-container text-black max-w-md mx-auto p-8 bg-white rounded shadow-lg mt-8"
+      >
+        <h2 className="text-center text-2xl font-bold mb-4">Book a Room</h2>
+        {message && <p className="message text-center mb-4">{message}</p>}
+        <form onSubmit={handleSubmit} className="booking-form space-y-4">
+          <div className="form-group flex flex-col">
+            <label htmlFor="roomType" className="font-bold">
+              Room Type:
+            </label>
+            <select
+              id="roomType"
+              value={roomType}
+              onChange={(e) => setRoomType(e.target.value)}
+              className="p-2 border border-gray-300 rounded"
+            >
+              <option value="1bedroom">1 Bedroom (3500)</option>
+              <option value="2bedroom">2 Bedroom (5000)</option>
+            </select>
+          </div>
+          <div className="form-group flex flex-col">
+            <label htmlFor="numberOfMembers" className="font-bold">
+              Number of Members:
+            </label>
             <input
-              type="tel"
-              placeholder="Your mobile number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              type="number"
+              id="numberOfMembers"
+              min="1"
+              max={roomType === "1bedroom" ? 2 : 4}
+              value={numberOfMembers}
+              onChange={(e) => setNumberOfMembers(e.target.value)}
+              className="p-2 border border-gray-300 rounded"
             />
-            <p>
-              Total amount for your stay (
-              {computeNights()} night{computeNights() !== 1 && "s"}):{" "}
-              <strong>{computeTotalAmount()}</strong>
-            </p>
-            <div className="modal-buttons">
-              <button onClick={handleModalConfirm} className="btn confirm">
-                Confirm Booking
-              </button>
-              <button onClick={() => setShowModal(false)} className="btn cancel">
-                Cancel
-              </button>
+          </div>
+          <div className="form-group flex flex-col">
+            <label htmlFor="checkIn" className="font-bold">
+              Check-In Date:
+            </label>
+            <input
+              type="date"
+              id="checkIn"
+              value={checkIn}
+              onChange={(e) => setCheckIn(e.target.value)}
+              className="p-2 border border-gray-300 rounded"
+            />
+          </div>
+          <div className="form-group flex flex-col">
+            <label htmlFor="checkOut" className="font-bold">
+              Check-Out Date:
+            </label>
+            <input
+              type="date"
+              id="checkOut"
+              value={checkOut}
+              onChange={(e) => setCheckOut(e.target.value)}
+              className="p-2 border border-gray-300 rounded"
+            />
+          </div>
+          <button
+            type="submit"
+            className="btn w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+          >
+            Proceed to Confirmation
+          </button>
+        </form>
+
+        {/* Modal Popup for Phone Number and Customer Name */}
+        {showModal && (
+          <div className="modal-overlay fixed inset-0 flex justify-center items-center bg-black bg-opacity-60 z-50">
+            <div className="modal-content bg-white p-6 rounded max-w-sm w-full">
+              <h3 className="text-center text-xl font-bold mb-4">
+                Enter Your Details
+              </h3>
+              <input
+                type="text"
+                placeholder="Your full name"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded mb-4"
+              />
+              <input
+                type="tel"
+                placeholder="Your mobile number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded mb-4"
+              />
+              <p className="text-center mb-4">
+                Total amount for your stay ({computeNights()} night
+                {computeNights() !== 1 && "s"}):{" "}
+                <strong>{computeTotalAmount()}</strong>
+              </p>
+              <div className="modal-buttons flex justify-around">
+                <button
+                  onClick={handleModalConfirm}
+                  className="btn py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                >
+                  Confirm Booking
+                </button>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="btn py-2 px-4 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Inline Styles */}
-      <style jsx>{`
-        .booking-form-container {
-          max-width: 500px;
-          margin: 2rem auto;
-          padding: 2rem;
-          background: #f9f9f9;
-          border-radius: 8px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-          font-family: Arial, sans-serif;
-        }
-        h2 {
-          text-align: center;
-          margin-bottom: 1.5rem;
-          color: #333;
-        }
-        .message {
-          text-align: center;
-          margin-bottom: 1rem;
-          color: #d9534f;
-        }
-        .booking-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
-        .form-group {
-          display: flex;
-          flex-direction: column;
-        }
-        label {
-          margin-bottom: 0.5rem;
-          font-weight: bold;
-          color: #555;
-        }
-        input,
-        select {
-          padding: 0.5rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 1rem;
-        }
-        .btn {
-          padding: 0.75rem;
-          border: none;
-          border-radius: 4px;
-          background: #825f35;
-          color: #fff;
-          font-size: 1rem;
-          cursor: pointer;
-          transition: background 0.3s ease;
-        }
-        .btn:hover {
-          background: #6b4d2f;
-        }
-        /* Modal Styles */
-        .modal-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.6);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          z-index: 1000;
-        }
-        .modal-content {
-          background: #fff;
-          padding: 2rem;
-          border-radius: 8px;
-          width: 90%;
-          max-width: 400px;
-          text-align: center;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-        .modal-buttons {
-          display: flex;
-          justify-content: space-around;
-          margin-top: 1rem;
-        }
-        .btn.confirm {
-          background: #6b4d2f;
-        }
-        .btn.cancel {
-          background: #825f35;
-        }
-        .btn.cancel:hover {
-          background: #6b4d2f;
-        }
-      `}</style>
+        )}
+      </div>
     </div>
   );
 }
