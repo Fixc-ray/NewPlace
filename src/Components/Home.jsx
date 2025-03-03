@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import g5 from "../assets/g5.jpg";
-import g7 from "../assets/g7.jpg";
-import g3 from "../assets/g3.jpg";
-import g4 from "../assets/g4.jpg";
 import "./App.css";
 import { FaCar, FaUmbrellaBeach, FaShieldAlt, FaWifi, FaChevronDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const images = [g5, g7, g3, g4];
+  // Replace these URLs with your actual image links
+  const images = [
+    "https://lh3.googleusercontent.com/pw/AP1GczOmltU9QMKHzsea8omp_SeN3-7krTUe7pUh-w_jGYEdFGJ0sZUfJdFOy0r-IeQ6XJQlUqOHcDl8o74uBl3-AyAenypw_aHJyixMAThL7eGUhQ2awXGttqTVCcYFFuq3Q46cXgkgoo6K9awYafyBxbMccw=w828-h552-s-no-gm?authuser=0",
+    "https://lh3.googleusercontent.com/pw/AP1GczNpksqO1X004SDyx2iRGtg7BzUc5AlqfCOn-s54JPV4fKn_jy8KfrSmimzpSWdRERuQxfmimfz8d9dZX1WPHFSW2p5C8ODFQx3gwztT3fqJG12kmgTPy6bMuS83hM6yzozGbYmhgEdHP04z-YkiFEXvZQ=w828-h552-s-no-gm?authuser=0",
+    "https://lh3.googleusercontent.com/pw/AP1GczPxMmDFeO81KCkLeuybhLH6j-odH3yp-_UxqDZYU3ldiNXk-7H3dfPpKr55jQ11Eu9Slk34Acb189GuyE-JW8C6ydP16m1BWaAFq6fKHQJNmf0BsTHo6-fm74LFPBHmF-YhtmRHwYAeg-UNaim7aVD5dA=w828-h552-s-no-gm?authuser=0",
+    "https://lh3.googleusercontent.com/pw/AP1GczP7Bq5OLt9VijypWM6tApKSd6QO3ULphBxrH49CdusDXG0_G_xwYHvc1Lrq2hIA9leowQ_IPkvUaHL7v9_J1Y2HI0OzPzplBONvmAwqichnIhF2CK4HkAjpcgg40M2jEt-vp62AoLhsaU23GWeuZkN80w=w828-h552-s-no-gm?authuser=0",
+  ];
   const [currentImage, setCurrentImage] = useState(0);
   const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ function Home() {
 
   const handleContactClick = () => {
     const businessWhatsAppNumber = "254115995295";
-    const message = "Hello, I would like to inquire about your services."; // Customize this message if needed
+    const message = "Hello, I would like to inquire about your services.";
     const whatsappUrl = `https://wa.me/${businessWhatsAppNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
   };

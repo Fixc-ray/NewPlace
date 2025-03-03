@@ -1,5 +1,5 @@
 import React from "react";
-import g5 from "../assets/g5.jpg";
+import g3 from "../assets/g3.jpg";
 
 const About = () => {
   return (
@@ -49,7 +49,7 @@ const About = () => {
           <div className="md:w-1/2 relative">
             <div className="absolute inset-0 bg-black opacity-50 rounded"></div>
             <img
-              src={g5}
+              src={g3}
               alt="About us"
               className="w-full h-auto rounded shadow-lg filter brightness-80"
             />

@@ -79,7 +79,6 @@ function Dashboard({ currentUser }) {
       });
   }, []);
 
-  // Dummy calls to fetch users and rooms when their tabs are active.
   useEffect(() => {
     if (activeTab === "users") {
       fetch("https://havenplacebackend.onrender.com/admin/users")

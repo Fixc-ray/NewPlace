@@ -1,18 +1,18 @@
 import React from "react";
 import { FaChevronDown } from "react-icons/fa";
-import Rooms from "../assets/Rooms.jpg"; // Used as the hero background for the Rooms page
-import g13 from "../assets/g13.jpg";       // Room 1 image
-import g14 from "../assets/g14.jpg";       // Room 2 image (make sure this image exists)
-import g19 from "../assets/g19.jpg";       // Room 3 image (make sure this image exists)
-import g12 from "../assets/g12.jpg";
+import Rooms from "../assets/Rooms.jpg";
+import g2 from "../assets/g2.jpg";      
+import g3 from "../assets/g3.jpg";    
+import g6 from "../assets/g6.jpg";       
+import g7 from "../assets/g7.jpg";
 
 function RoomComponent() {
   // Each room now has its own image.
   const rooms = [
-    { id: 1, hasBalcony: true, image: g13 },
-    { id: 2, hasBalcony: true, image: g14 },
-    { id: 3, hasBalcony: true, image: g19 },
-    { id: 4, hasBalcony: false, image: g12 }, // Using the hero image as a fallback for room 4
+    { id: 1, hasBalcony: true, image: g2 },
+    { id: 2, hasBalcony: true, image: g3 },
+    { id: 3, hasBalcony: true, image: g6 },
+    { id: 4, hasBalcony: false, image: g7 }, 
   ];
 
   return (
