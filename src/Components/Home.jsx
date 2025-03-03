@@ -46,7 +46,7 @@ function Home() {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center sm:items-start sm:pt-16 h-full px-4 sm:px-8 md:px-12 lg:px-16 text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center sm:items-start h-full px-4 sm:px-8 md:px-12 lg:px-16 text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -129,9 +129,6 @@ function Home() {
             </div>
           </div>
         </motion.div>
-      </div>
-      <div className="arrow absolute bottom-4 left-1/2 transform -translate-x-1/2">
-        <FaChevronDown size={30} className="text-white animate-bounce" />
       </div>
     </div>
   );

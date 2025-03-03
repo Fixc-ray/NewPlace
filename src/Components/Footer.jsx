@@ -3,25 +3,26 @@ import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaInstagram, FaTiktok } from "r
 
 const Footer = () => {
   return (
-    <footer id="footer" className="home bg-[#141414] text-white py-8">
+    <footer id="footer" className="home bg-[#141414] text-white p-8">
       <div className="container mx-auto">
         {/* First Row - Address, Phone, Email */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 gap-8 mb-8 justify-items-center text-center sm:grid-cols-2 lg:grid-cols-3">
           <div>
-            <h3 className="text-lg font-semibold flex items-center mb-4">
+            <h3 className="text-lg font-semibold flex items-center justify-center mb-4">
               <FaMapMarkerAlt className="mr-2" />
               Where to Find Us
             </h3>
+            <p>Mamboleo, Kisumu</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold flex items-center mb-4">
+            <h3 className="text-lg font-semibold flex items-center justify-center mb-4">
               <FaPhoneAlt className="mr-2" />
               Call Us
             </h3>
             <p>0115995295</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold flex items-center mb-4">
+            <h3 className="text-lg font-semibold flex items-center justify-center mb-4">
               <FaEnvelope className="mr-2" />
               Email Us
             </h3>
@@ -31,7 +32,8 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 my-8"></div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-8 items-center">
+        {/* Second Row */}
+        <div className="grid grid-cols-1 gap-8 items-center justify-items-center text-center sm:grid-cols-2 lg:grid-cols-2">
           <div>
             <h3 className="text-xl font-bold">New Haven</h3>
             <p className="text-sm mt-2">

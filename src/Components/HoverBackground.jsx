@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import g7 from "../assets/g7.jpg";
-import g6 from "../assets/g6.jpg";
 import "../index.css";
 
 const HoverBackground = () => {
-  const [background, setBackground] = useState(g7);
+  // Replace these URLs with your desired image URLs
+  const defaultBackground =
+    "https://lh3.googleusercontent.com/pw/AP1GczPxMmDFeO81KCkLeuybhLH6j-odH3yp-_UxqDZYU3ldiNXk-7H3dfPpKr55jQ11Eu9Slk34Acb189GuyE-JW8C6ydP16m1BWaAFq6fKHQJNmf0BsTHo6-fm74LFPBHmF-YhtmRHwYAeg-UNaim7aVD5dA=w828-h552-s-no-gm?authuser=0";
+  const alternateBackground =
+    "https://lh3.googleusercontent.com/pw/AP1GczOQc4f5b9tQ5nTRpiAH9GzTzOGOXnAdn1djRZsjP4eKPV0k3QW0IbvBNLPIBjFT1StxEtpjAnJb-IeRKk_AtlumaVPgiiPRSTXsgxdCekC9VGtMQ4peT8PbANYBnWS8532OrrHN4dllRjQR5vBfMMACDg=w828-h552-s-no-gm?authuser=0";
+
+  const [background, setBackground] = useState(defaultBackground);
   const [text, setText] = useState("Welcome to Paradise");
   const [scale, setScale] = useState(0.5);
   const [paragraph, setParagraph] = useState(
@@ -30,9 +34,7 @@ const HoverBackground = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const DiscoverMore = () => {
@@ -61,9 +63,7 @@ const HoverBackground = () => {
 
       {/* Discover More Button */}
       <button
-        className="relative z-10 px-6 py-3 mt-4 text-base sm:text-lg font-semibold bg-[#756745] text-black 
-          hover:bg-[#756745] hover:scale-105 transition duration-300 
-          shadow-lg hover:shadow-[#756745] rounded-md"
+        className="relative z-10 px-6 py-3 mt-4 text-base sm:text-lg font-semibold bg-[#756745] text-black hover:bg-[#756745] hover:scale-105 transition duration-300 shadow-lg hover:shadow-[#756745] rounded-md"
         onClick={DiscoverMore}
       >
         Discover More
@@ -74,7 +74,7 @@ const HoverBackground = () => {
         <a
           className="text-base sm:text-lg font-semibold px-4 py-2 sm:px-6 sm:py-3 rounded transition duration-300 text-white cursor-pointer"
           onMouseEnter={() => {
-            setBackground(g6);
+            setBackground(alternateBackground);
             setText("Discover the Hidden Gems");
             setParagraph(
               "Welcome to Paradise, where luxury meets tranquility. Nestled in the heart of the city, our exquisite Bnb offers a perfect blend of modern comfort and timeless elegance. Whether you're here for business or leisure, our Bnb provides the perfect setting for a memorable stay."
@@ -87,7 +87,7 @@ const HoverBackground = () => {
         <a
           className="text-base sm:text-lg font-semibold px-4 py-2 sm:px-6 sm:py-3 rounded transition duration-300 text-white cursor-pointer"
           onMouseEnter={() => {
-            setBackground(g7);
+            setBackground(defaultBackground);
             setText("Experience the Luxury");
             setParagraph(
               "From curated local experiences to breathtaking views, every moment at New Haven is crafted to delight. Enjoy personalized concierge services, and an ambiance that feels like a five-star getaway—but with the warmth of home."

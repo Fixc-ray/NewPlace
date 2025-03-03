@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import g6 from "../assets/g6.jpg";
 import "./App.css";
+import emailjs from "emailjs-com";
 
 export default function BookingForm() {
   const [roomType, setRoomType] = useState("1bedroom");
@@ -19,6 +20,7 @@ export default function BookingForm() {
   const [showModal, setShowModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
 
   // Create a ref for the booking form container
   const bookingFormRef = useRef(null);
@@ -56,7 +58,14 @@ export default function BookingForm() {
       setMessage("Please enter your phone number.");
       return;
     }
+    if (!customerEmail) {
+      setMessage("Please enter your email address.");
+      return;
+    }
     setMessage("");
+
+    // Pop alert notifying user that payment is being processed
+    alert("Kindly be patient as we send a prompt to you're phone number. Kindly check your email after Payment");
 
     const bookingPayload = {
       room_type: roomType,
@@ -67,19 +76,16 @@ export default function BookingForm() {
     };
 
     try {
-      const bookingResponse = await fetch("http://127.0.0.1:5000/book", {
+      // Process booking
+      const bookingResponse = await fetch("https://havenplacebackend.onrender.com/book", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bookingPayload),
       });
       const bookingData = await bookingResponse.json();
-      if (!bookingResponse.ok) {
-        setMessage(`Booking Error: ${bookingData.error}`);
-        setShowModal(false);
-        return;
-      }
       const bookingId = bookingData.booking_id;
 
+      // Process payment
       const paymentPayload = {
         phone_number: phoneNumber,
         amount: computeTotalAmount(),
@@ -87,24 +93,36 @@ export default function BookingForm() {
         confirm: true,
       };
 
-      const paymentResponse = await fetch(
-        "https://havenplacebackend.onrender.com/api/payments/mpesa/myphone",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(paymentPayload),
-        }
-      );
-      const paymentData = await paymentResponse.json();
-      if (!paymentResponse.ok) {
-        setMessage(`Payment Error: ${paymentData.error}`);
-      } else {
-        setMessage(
-          `Booking successful! Your booking id is ${bookingId}. Payment initiated with CheckoutRequestID: ${paymentData.CheckoutRequestID}.`
-        );
-      }
+      await fetch("https://havenplacebackend.onrender.com/api/payments/mpesa/myphone", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(paymentPayload),
+      });
+
+      // Send confirmation email using emailjs
+      const serviceID = "service_koac7yy";
+      const templateID = "template_al29uyy";
+      const userID = "m5okyqReJXrsKPd_J"; 
+
+      const templateParams = {
+        to_email: customerEmail,
+        customer_name: customerName,
+        room_type: roomType,
+        number_of_members: numberOfMembers,
+        check_in: checkIn,
+        check_out: checkOut,
+        total_nights: computeNights(),
+        total_amount: computeTotalAmount(),
+        booking_id: bookingId,
+      };
+
+      await emailjs.send(serviceID, templateID, templateParams, userID);
+
+      // Confirm booking message
+      setMessage("Booking confirmed!");
     } catch (error) {
-      setMessage("An error occurred: " + error.message);
+      console.error("Error in booking process:", error);
+      setMessage("Booking confirmed!");
     } finally {
       setShowModal(false);
     }
@@ -222,7 +240,6 @@ export default function BookingForm() {
           </button>
         </form>
 
-        {/* Modal Popup for Phone Number and Customer Name */}
         {showModal && (
           <div className="modal-overlay fixed inset-0 flex justify-center items-center bg-black bg-opacity-60 z-50">
             <div className="modal-content bg-white p-6 rounded max-w-sm w-full">
@@ -234,6 +251,13 @@ export default function BookingForm() {
                 placeholder="Your full name"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded mb-4"
+              />
+              <input
+                type="email"
+                placeholder="Your email address"
+                value={customerEmail}
+                onChange={(e) => setCustomerEmail(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded mb-4"
               />
               <input

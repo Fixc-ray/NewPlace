@@ -1,4 +1,3 @@
-// Navbar.js
 import { useState, useEffect } from "react";
 import { Home, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
@@ -19,8 +18,8 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full p-4 transition-colors duration-300 z-50 bg-white ${
-        scrolled ? "sm:bg-white" : "sm:bg-transparent"
+      className={`fixed top-0 left-0 w-full p-4 transition-colors duration-300 z-50 ${
+        scrolled ? "bg-white" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto grid grid-cols-3 items-center">
@@ -28,7 +27,7 @@ export default function Navbar() {
         <div className="text-left">
           <button
             className={`ham bg-transparent p-2 ${
-              scrolled ? "sm:text-black" : "sm:text-white"
+              scrolled ? "text-black" : "text-white"
             }`}
             onClick={() => setIsOpen(!isOpen)}
           >
@@ -41,7 +40,7 @@ export default function Navbar() {
           <a
             href="/"
             className={`text-lg sm:text-2xl font-bold ${
-              scrolled ? "sm:text-black" : "sm:text-white"
+              scrolled ? "text-black" : "text-white"
             }`}
           >
             New Haven Place
@@ -50,7 +49,6 @@ export default function Navbar() {
 
         {/* Right Column: CTA Button */}
         <div className="text-right">
-          {/* Link to the Booking page */}
           <Link to="/booking">
             <button className="ham bg-[#825f35] text-white text-xs p-1 sm:text-sm sm:p-2">
               Book Now
@@ -69,15 +67,6 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="/socials"
-              className="block text-black hover:text-yellow-300"
-              onClick={() => setIsOpen(false)}
-            >
-              Gallery
             </a>
           </li>
           <li>
