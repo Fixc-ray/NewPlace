@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Home, Menu, X } from "lucide-react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
+import { FaInstagram, FaTiktok } from "react-icons/fa"; // Import Instagram and TikTok icons
 import "./App.css";
 
 export default function Navbar() {
@@ -39,11 +40,12 @@ export default function Navbar() {
         <div className="text-center">
           <a
             href="/"
-            className={`text-lg sm:text-2xl font-bold ${
+            style={{ fontFamily: "'Mate', 'Mouse Memoirs', 'PT Serif', serif" }}
+            className={`text-2xl sm:text-2xl font-bold ${
               scrolled ? "text-black" : "text-white"
             }`}
           >
-            New Haven Place
+            New Haven Suites
           </a>
         </div>
 
@@ -86,6 +88,29 @@ export default function Navbar() {
             >
               Contact
             </a>
+          </li>
+          {/* Social Media Icons */}
+          <li>
+            <div className="flex justify-center items-center gap-4">
+              <a
+                href="https://www.instagram.com/new.haven.suites/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-black hover:text-pink-500"
+                onClick={() => setIsOpen(false)}
+              >
+                <FaInstagram size={24} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@new_haven_suites?lang=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-black hover:text-blue-500"
+                onClick={() => setIsOpen(false)}
+              >
+                <FaTiktok size={24} />
+              </a>
+            </div>
           </li>
         </ul>
       )}

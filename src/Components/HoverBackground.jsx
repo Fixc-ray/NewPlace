@@ -7,7 +7,7 @@ const HoverBackground = () => {
   const defaultBackground =
     "https://lh3.googleusercontent.com/pw/AP1GczPxMmDFeO81KCkLeuybhLH6j-odH3yp-_UxqDZYU3ldiNXk-7H3dfPpKr55jQ11Eu9Slk34Acb189GuyE-JW8C6ydP16m1BWaAFq6fKHQJNmf0BsTHo6-fm74LFPBHmF-YhtmRHwYAeg-UNaim7aVD5dA=w828-h552-s-no-gm?authuser=0";
   const alternateBackground =
-    "https://lh3.googleusercontent.com/pw/AP1GczOQc4f5b9tQ5nTRpiAH9GzTzOGOXnAdn1djRZsjP4eKPV0k3QW0IbvBNLPIBjFT1StxEtpjAnJb-IeRKk_AtlumaVPgiiPRSTXsgxdCekC9VGtMQ4peT8PbANYBnWS8532OrrHN4dllRjQR5vBfMMACDg=w828-h552-s-no-gm?authuser=0";
+    "https://lh3.googleusercontent.com/pw/AP1GczMzyLVKmJc5JTHRW6kvStVjWB0m6LOKfA57eqIzGBAKz1VOiEP5J7a_x-9lv26ij6BCpIRXAkq26ogBrY4ozJRsy2vb2UPOzctRaLOhdkC1RIdJDerYinmmyzmXVd6OXeX1Cw_9U5mFcDBuxON5413f1Q=w828-h552-s-no-gm?authuser=0";
 
   const [background, setBackground] = useState(defaultBackground);
   const [text, setText] = useState("Welcome to Paradise");

@@ -19,7 +19,6 @@ function Home() {
     const interval = setInterval(() => {
       setCurrentImage((prevIndex) => (prevIndex + 1) % images.length);
     }, 7000);
-
     return () => clearInterval(interval);
   }, [images.length]);
 
@@ -35,6 +34,14 @@ function Home() {
     const message = "Hello, I would like to inquire about your services.";
     const whatsappUrl = `https://wa.me/${businessWhatsAppNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
+  };
+
+  // New function to scroll to the footer smoothly
+  const handleScrollToFooter = () => {
+    const footerElement = document.getElementById("footer");
+    if (footerElement) {
+      footerElement.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -93,6 +100,12 @@ function Home() {
             onClick={handleContactClick}
           >
             Contact Us
+          </button>
+          <button
+            className="bg-transparent text-white border border-white font-bold rounded transition duration-300 text-xs sm:text-sm px-4 py-2 hover:bg-white hover:text-black"
+            onClick={handleScrollToFooter} // Updated handler
+          >
+            Follow Our Socials
           </button>
         </motion.div>
 

@@ -158,17 +158,6 @@ export default function BookingForm() {
             Book A Stay Now And Escape To Tranquility
           </motion.p>
         </div>
-        {/* Arrow that scrolls to the booking form */}
-        <div
-          className="arrow absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
-          onClick={() => {
-            if (bookingFormRef.current) {
-              bookingFormRef.current.scrollIntoView({ behavior: "smooth" });
-            }
-          }}
-        >
-          <FaChevronDown size={30} className="text-white animate-bounce" />
-        </div>
       </div>
 
       {/* Booking Form Container */}

@@ -1,13 +1,15 @@
-
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Mate:ital@0;1&family=Mouse+Memoirs&family=Noto+Sans+TC:wght@100..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* Update the font-family to your chosen fonts */
+  font-family: "Mate", "Mouse Memoirs", "Noto Sans TC", "PT Serif", serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #ffff;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,9 +21,10 @@ a {
   font-weight: 500;
   text-decoration: inherit;
 }
+
 a:hover {
   cursor: pointer;
-  scale: 1.1;
+  transform: scale(1.1);
 }
 
 body {
@@ -56,7 +59,7 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #ffff;
+    color: #ffffff;
     background-color: #ffffff;
   }
   button {
@@ -65,14 +68,14 @@ button:focus-visible {
 }
  
 @keyframes zoom-in {
-     from {
-       transform: scale(0.2);
-     }
-     to {
-       transform: scale(1);
-     }
-   }
+  from {
+    transform: scale(0.2);
+  }
+  to {
+    transform: scale(1);
+  }
+}
   
-   .animate-zoom-in {
-     animation: zoom-in 1s ease-out;
-   } 
+.animate-zoom-in {
+  animation: zoom-in 1s ease-out;
+}
